@@ -1,5 +1,4 @@
 Fix:
-End overtime after a goal
 
 Time rounds up to higher second after goal
 Players have wrong color in the starting screen after over time
@@ -8,7 +7,7 @@ New controller system, support ps4 controllers
 ps4 controllers control directly the angle of the stick
 
 Done?
-Reset Morko status when game ends
+End overtime after a goal
 
 Extra:
 Npc logic??

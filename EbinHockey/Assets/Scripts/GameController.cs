@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     private PlayerController[] players;
     private bool countTime = false;
     private bool scored = false;
+    private bool overTime = false;
     private Text minutesText;
     private Text secondsText;
     private Text score1Text;
@@ -122,6 +123,7 @@ public class GameController : MonoBehaviour
     }
     private void OverTime()
     {
+        overTime = true;
         overTimeText.Reset();
         periodText.text = "OT";
         Invoke("SwapSides", 2f);
@@ -170,7 +172,8 @@ public class GameController : MonoBehaviour
             int side = team1 ? 1 : 2;
             Goal(side);
             countTime = false;
-            StartCoroutine("SetPuck", goalDelay);
+            if (overTime) Invoke("EndGame", goalDelay);
+            else StartCoroutine("SetPuck", goalDelay);
         }
         
     }
