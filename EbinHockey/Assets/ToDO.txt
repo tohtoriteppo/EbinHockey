@@ -1,0 +1,9 @@
+Fix graphic with borders -> to smoother
+
+Thoughts:
+Sticks do not hit other players or sticks?
+Players have hitboxes against puck?
+
+Extra:
+Npc logic??
+Goalie logic??
