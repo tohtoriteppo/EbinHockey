@@ -97,7 +97,8 @@ public class GameController : MonoBehaviour
 
     private void EndGame()
     {
-        if(score1 == score2)
+        
+        if (score1 == score2)
         {
             OverTime();
         }
@@ -108,7 +109,16 @@ public class GameController : MonoBehaviour
             {
                 team.SetPositions();
             }
-            
+            //Invoke("SwapSides", 2f);
+            if(currentPeriod % 2 == 0)
+            {
+                Debug.Log("SWPA");
+                SwapSides();
+            }
+            foreach (TeamController team in teamControllers)
+            {
+                team.SetPositions();
+            }
             FindObjectOfType<TitleController>().TitleScreen();
         }
     }
@@ -126,7 +136,7 @@ public class GameController : MonoBehaviour
         overTime = true;
         overTimeText.Reset();
         periodText.text = "OT";
-        Invoke("SwapSides", 2f);
+        
         StartCoroutine("SetPuck", 2f);
     }
 
@@ -136,19 +146,26 @@ public class GameController : MonoBehaviour
         countTime = false;
         scored = true;
         SetPeriodTime(periodTime);
-        if (currentPeriod >= PeriodAmount)
+        currentPeriod++;
+        if (currentPeriod > PeriodAmount)
         {
-            Invoke("EndGame", 3);
+            Invoke("EndGame", 2.1f);
+
         }
         else
         {
-            Invoke("SwapSides", 2f);
+            Invoke("IncrementPeriod", 2f);
             StartCoroutine("SetPuck", 2f);
-            currentPeriod++;
-            periodText.text = currentPeriod.ToString();
+            
         }
+        Invoke("SwapSides", 2f);
+        
     }
-
+    private void IncrementPeriod()
+    {
+        
+        periodText.text = currentPeriod.ToString();
+    }
     public void Scored(bool team1)
     {
         
@@ -224,6 +241,7 @@ public class GameController : MonoBehaviour
         currentPeriod = 1;
         score1 = 0;
         score2 = 0;
+        overTime = false;
         SetUI();
     }
     public void Out()
@@ -273,6 +291,7 @@ public class GameController : MonoBehaviour
     }
     private void SwapSides()
     {
+        Debug.Log("swapsides");
         goal1.SwapTeam();
         goal2.SwapTeam();
         Vector3 pos1 = team1BG.transform.position;
@@ -281,6 +300,11 @@ public class GameController : MonoBehaviour
         int side = teamControllers[0].side;
         teamControllers[0].SetSide(teamControllers[1].GetSide());
         teamControllers[1].SetSide(side);
+        int score = score1;
+        score1 = score2;
+        score2 = score;
+        score1Text.text = score1.ToString();
+        score2Text.text = score2.ToString();
     }
 
 }

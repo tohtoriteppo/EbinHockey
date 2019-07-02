@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startDelay: 2
   goalDelay: 2
-  PeriodTime: 60
   PeriodAmount: 3
 --- !u!4 &92917078
 Transform:
@@ -1871,7 +1870,7 @@ MonoBehaviour:
   - Puck Weight
   values:
   - 3
-  - 90
+  - 10
   - 1
   - 1
   - 5

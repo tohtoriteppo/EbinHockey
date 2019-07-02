@@ -21,6 +21,10 @@ public class TeamController : MonoBehaviour
     {
         side = sideToPut;
         startPositions = GameObject.FindGameObjectsWithTag("Team" + side.ToString());
+        foreach(PlayerController player in players)
+        {
+            player.side = sideToPut;
+        }
     }
     public void AddPlayer(PlayerController player)
     {

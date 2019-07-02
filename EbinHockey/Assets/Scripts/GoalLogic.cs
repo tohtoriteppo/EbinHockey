@@ -31,6 +31,6 @@ public class GoalLogic : MonoBehaviour
     }
     public void SwapTeam()
     {
-        team1 = !team1;
+        team1 = team1;
     }
 }

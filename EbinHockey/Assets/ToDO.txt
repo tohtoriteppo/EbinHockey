@@ -1,13 +1,15 @@
 Fix:
 
-Time rounds up to higher second after goal
-Players have wrong color in the starting screen after over time
-Add game ending screen
+
+Add:
+game ending screen
 New controller system, support ps4 controllers
 ps4 controllers control directly the angle of the stick
+New characters
+animations?
 
 Done?
-End overtime after a goal
+Players have wrong color in the starting screen after over time
 
 Extra:
 Npc logic??
