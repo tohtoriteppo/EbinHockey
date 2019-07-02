@@ -211,6 +211,10 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         goals = new int[] { 0, 0, 0, 0 };
+        foreach (PlayerController player in players)
+        {
+            player.ResetMorko();
+        }
         SetGoals();
         CountTime();
         StartCoroutine("SetPuck", 1f);

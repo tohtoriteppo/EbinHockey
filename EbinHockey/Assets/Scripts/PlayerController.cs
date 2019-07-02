@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public Sprite morkoColor;
     public Sprite morkoNonColor;
 
+    private Sprite originalSpriteColor;
+    private Sprite originalSpriteNonColor;
     private float offSet = 60f;
     private GameObject pText;
     private Vector3 startPosition;
@@ -38,6 +40,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        originalSpriteColor = GetComponent<SpriteRenderer>().sprite;
+        originalSpriteNonColor = transform.GetChild(1).GetComponent<SpriteRenderer>().sprite;
         pText = Instantiate(Resources.Load<GameObject>("PText"), GameObject.Find("GameScreen").transform);
         pText.GetComponent<Text>().text = "P" + playerNum.ToString();
         startPosition = transform.position;
@@ -196,6 +200,13 @@ public class PlayerController : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = morkoColor;
         GetComponent<SpriteRenderer>().color = color;
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = morkoNonColor;
+    }
+    public void ResetMorko()
+    {
+        Color color = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().sprite = originalSpriteColor;
+        GetComponent<SpriteRenderer>().color = color;
+        transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = originalSpriteNonColor;
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
