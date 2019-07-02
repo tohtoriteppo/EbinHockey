@@ -8,8 +8,6 @@ New controller system, support ps4 controllers
 ps4 controllers control directly the angle of the stick
 
 Done?
-Players shouldnt be able to score after time runs out
-
 
 
 Extra:

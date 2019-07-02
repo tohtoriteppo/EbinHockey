@@ -7,12 +7,12 @@ public class GameController : MonoBehaviour
 {
     public float startDelay = 2f;
     public float goalDelay = 3f;
-    public int PeriodTime = 30;
     public int PeriodAmount = 3;
     private float minutes = 2f;
     private float seconds = 0f;
     private int score1 = 0;
     private int score2 = 0;
+    private int periodTime = 30;
     private PlayerController[] players;
     private bool countTime = false;
     private bool scored = false;
@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 11);
         Physics2D.IgnoreLayerCollision(8, 11);
         Physics2D.IgnoreLayerCollision(8, 8);
-        SetPeriodTime((int)PeriodTime);
+        SetPeriodTime(periodTime);
     }
 
     // Update is called once per frame
@@ -114,6 +114,7 @@ public class GameController : MonoBehaviour
 
     public void SetPeriodTime(int time)
     {
+        periodTime = time;
         minutes = time / 60;
         seconds = time % 60;
         minutesText.text = minutes.ToString();
@@ -132,7 +133,7 @@ public class GameController : MonoBehaviour
         timeText.Reset();
         countTime = false;
         scored = true;
-        SetPeriodTime((int)PeriodTime);
+        SetPeriodTime(periodTime);
         if (currentPeriod >= PeriodAmount)
         {
             Invoke("EndGame", 3);
