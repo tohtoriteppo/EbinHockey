@@ -1,8 +1,16 @@
-Fix graphic with borders -> to smoother
+Fix:
+Reset Morko status when game ends
+Time rounds up to higher second after goal
+Players have wrong color in the starting screen after over time
+period time is wrong
+Add game ending screen
+New controller system, support ps4 controllers
+ps4 controllers control directly the angle of the stick
 
-Thoughts:
-Sticks do not hit other players or sticks?
-Players have hitboxes against puck?
+Done?
+Players shouldnt be able to score after time runs out
+
+
 
 Extra:
 Npc logic??

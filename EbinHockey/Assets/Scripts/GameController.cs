@@ -131,6 +131,7 @@ public class GameController : MonoBehaviour
     {
         timeText.Reset();
         countTime = false;
+        scored = true;
         SetPeriodTime((int)PeriodTime);
         if (currentPeriod >= PeriodAmount)
         {
@@ -167,7 +168,6 @@ public class GameController : MonoBehaviour
             }
             int side = team1 ? 1 : 2;
             Goal(side);
-            Debug.Log("SIDE " + side);
             countTime = false;
             StartCoroutine("SetPuck", goalDelay);
         }
@@ -176,7 +176,6 @@ public class GameController : MonoBehaviour
     private void Goal(int side)
     {
         List<int> goalMaker = puck.GetComponent<PuckLogic>().GetGoalMaker();
-        Debug.Log("goalMaker.Count-1 " + (goalMaker.Count - 1));
         int it = goalMaker.Count - 1;
         bool found = false;
         while (it >= 0)
