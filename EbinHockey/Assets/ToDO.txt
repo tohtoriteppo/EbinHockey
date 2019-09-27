@@ -2,9 +2,8 @@ Fix:
 
 
 Add:
+fix ps buttons title screen
 game ending screen
-New controller system, support ps4 controllers
-ps4 controllers control directly the angle of the stick
 New characters
 animations?
 

@@ -25,6 +25,7 @@ public class TitleController : MonoBehaviour
     [SerializeField] float[] values;
     private float[] valueAdditions;
     private float[] valueFactors;
+    private JoyController joyController;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,6 +43,7 @@ public class TitleController : MonoBehaviour
         playerHoldTime = new float[] { 0, 0, 0, 0 };
         valueAdditions = new float[] { 1, 10, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f };
         valueFactors = new float[] { 3, 60, 0.5f, 2000, 1, 500, 1.1f, 1, 0.5f, 0.3f, 1 };
+        joyController = FindObjectOfType<JoyController>();
         SetDefaults();
         UpdateValues(1);
 
@@ -56,7 +58,7 @@ public class TitleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameOn)
+        if (!gameOn)
         {
             for (int i = 1; i < 5; i++)
             {
@@ -67,7 +69,7 @@ public class TitleController : MonoBehaviour
             }
             for (int i = 1; i < 5; i++)
             {
-                if (Input.GetButtonDown("p" + i + "_button_a"))
+                if (joyController.GetTackle(i))
                 {
                     StartGame();
                 }
@@ -81,13 +83,14 @@ public class TitleController : MonoBehaviour
             }
             for (int i = 1; i < 5; i++)
             {
-                if(Input.GetAxis("p" + i + "_joystick_horizontal") == 0 && Input.GetAxis("p" + i + "_joystick_vertical") == 0)
+                if (Mathf.Abs(joyController.GetLHorizontal(i)) < 0.1 && Mathf.Abs(joyController.GetLVertical(i)) < 0.1)
                 {
                     playerHoldTime[i-1] = 0;
                     playerPressed[i-1] = false;
                 }
                 else
-                {
+                { 
+                    
                     playerHoldTime[i-1] += Time.deltaTime;
                     if (playerHoldTime[i-1] > holdTreshold)
                     {
@@ -98,7 +101,7 @@ public class TitleController : MonoBehaviour
                         playerPressed[i-1] = true;
                         UpdateValues(i);
                     }
-                    
+
                 }
             }
         }
@@ -108,10 +111,20 @@ public class TitleController : MonoBehaviour
 
     private void UpdateValues(int i)
     {
-        current -= (int)Input.GetAxis("p" + i + "_joystick_vertical");
+        float val = joyController.GetLVertical(i);
+        if(Mathf.Abs(val) >= 0.1f)
+        {
+            val = val < 0 ? -1 : 1;
+        }
+        current -= (int)val;
         if (current > values.Length - 1) current = 0;
         if (current < 0) current = values.Length - 1;
-        values[current] += (int)Input.GetAxis("p" + i + "_joystick_horizontal") * valueAdditions[current];
+        float hor = joyController.GetLHorizontal(i);
+        if (Mathf.Abs(hor) >= 0.1f)
+        {
+            hor = hor < 0 ? -1 : 1;
+        }
+        values[current] += (int)hor * valueAdditions[current];
         if(current<2) valueObject.GetChild(current).GetComponent<Text>().text = ((int)values[current]).ToString();
         else valueObject.GetChild(current).GetComponent<Text>().text = values[current].ToString("F2");
         Vector3 pos = cursor.position;

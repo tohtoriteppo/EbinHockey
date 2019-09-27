@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private float originalDrag;
     private Color originalColor;
     private Color tackleColor;
+    private JoyController joyController;
     public int side;
 
     // Start is called before the first frame update
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         stickLogic = transform.GetChild(0).GetComponent<StickLogic>();
         stickLogic.playerNum = playerNum;
         originalDrag = rb.drag;
+        joyController = GameObject.FindObjectOfType<JoyController>();
         
     }
 
@@ -59,21 +61,27 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
         pText.transform.position = new Vector3(pos.x, pos.y + offSet, pos.z);
+        
         if (canMove)
         {
-            float horizontal = Input.GetAxis("p" + playerNum + "_joystick_horizontal");
-            float vertical = Input.GetAxis("p" + playerNum + "_joystick_vertical");
+            float horizontal = joyController.GetLHorizontal(playerNum);
+            float vertical = joyController.GetLVertical(playerNum);
+            if(playerNum == 1)
+            {
+                //Debug.Log("VERt " + vertical + " hor " + horizontal);
+
+            }
             horizontal = horizontal * Time.deltaTime;
             vertical = vertical * Time.deltaTime;
             Vector2 velocity = new Vector2(horizontal * accelerationSpeed, vertical * accelerationSpeed);
-            if(rb.velocity.magnitude>5)
+            if (rb.velocity.magnitude > 5)
             {
                 Debug.Log("player " + playerNum + " velo " + rb.velocity.magnitude);
             }
             Move(velocity);
             //Debug.Log("after " + rb.velocity.magnitude);
 
-            if (canTackle && (Input.GetButtonDown("p" + playerNum + "_button_a") || Input.GetButtonDown("p" + playerNum + "_button_x")))
+            if (canTackle && joyController.GetTackle(playerNum))
             {
                 StartCoroutine(Tackle());
             }
@@ -92,6 +100,9 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+
+
     private IEnumerator Tackle()
     {
         rb.mass = tackleMass;
